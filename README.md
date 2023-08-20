@@ -14,4 +14,4 @@ Cada entidade precisa ter pelo menos 3 atributos.
 9. Você não pode utilizar as entidades: Pessoa, Produto, Carro, Veículo.
 10. As entidades não podem ser repetidas entre os projetos, logo, você precisa colocar nos comentários abaixo quais serão as suas duas.
 
-**Para o código rodar você precisa atualizar o user e a senha do seu banco de dados Prostgre no arquivo application.properties**
+**Para o código rodar você precisa atualizar o user e a senha do seu banco de dados Prostgre no arquivo application.properties, além de criar um banco com o nome "evento"**

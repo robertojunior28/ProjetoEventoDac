@@ -7,33 +7,28 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity
-@Table(name = "locais")
+@Table(name = "local")
 public class Local {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String rua;
-    private String numero;
-    private String cidade;
+    private String street;
+    private String number;
+    private String city;
     private String uf;
 
-    public Local(String rua, String numero, String cidade, String uf) {
-        this.rua = rua;
-        this.numero = numero;
-        this.cidade = cidade;
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    public Local(String street, String number, String city, String uf) {
+        this.street = street;
+        this.number = number;
+        this.city = city;
         this.uf = uf;
     }
 
-    @Override
-    public String toString() {
-        return "Local{" +
-                "id=" + id +
-                ", rua='" + rua + '\'' +
-                ", numero=" + numero +
-                ", cidade='" + cidade + '\'' +
-                ", uf='" + uf + '\'' +
-                '}';
-    }
 
 }

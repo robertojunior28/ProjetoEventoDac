@@ -4,6 +4,7 @@ import br.edu.ifpb.dac.junior.business.service.LocalService;
 import br.edu.ifpb.dac.junior.model.entity.Local;
 import br.edu.ifpb.dac.junior.business.dto.LocalDto;
 import br.edu.ifpb.dac.junior.model.repository.LocalRepository;
+import br.edu.ifpb.dac.junior.utils.Convert;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class LocalServiceImpl implements LocalService {
-    private ModelMapper mapper;
     private LocalRepository localRepository;
     @Autowired
-    public LocalServiceImpl(ModelMapper mapper, LocalRepository localRepository) {
-        this.mapper = mapper;
+    public LocalServiceImpl(LocalRepository localRepository) {
         this.localRepository = localRepository;
     }
 
     @Override
     @Transactional
     public LocalDto salvar(LocalDto localDto) {
-        Local savedLocal = localRepository.save(mapper.map(localDto, Local.class));
-        return mapper.map(savedLocal, LocalDto.class);
+        Local savedLocal = localRepository.save(Convert.dtoToLocal(localDto));
+        return Convert.localToDto(savedLocal);
     }
 
     @Override
@@ -36,12 +35,12 @@ public class LocalServiceImpl implements LocalService {
         recoveredLocal.setCity(localDto.getCity());
         recoveredLocal.setUf(localDto.getUf());
         Local updatingLocal = localRepository.save(recoveredLocal);
-        return mapper.map(updatingLocal, LocalDto.class);
+        return Convert.localToDto(updatingLocal);
     }
 
     public LocalDto findById(long id){
         Local recoveredLocal = localRepository.findById(id).orElseThrow();
-        return mapper.map(recoveredLocal, LocalDto.class);
+        return Convert.localToDto(recoveredLocal);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class LocalServiceImpl implements LocalService {
         List<Local> recoveredLocations = localRepository.findAll();
 
         List<LocalDto> locationsDto = recoveredLocations.stream().map(
-                local -> mapper.map(local, LocalDto.class)).collect(Collectors.toList());
+                local -> Convert.localToDto(local)).collect(Collectors.toList());
 
         return locationsDto;
     }

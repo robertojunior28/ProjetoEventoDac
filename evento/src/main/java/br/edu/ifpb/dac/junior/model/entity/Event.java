@@ -3,6 +3,7 @@ package br.edu.ifpb.dac.junior.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,8 +21,13 @@ public class Event {
     private String description;
     private String date;
     private String time;
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Local> locals;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "event_local",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "local_id")
+    )
+    private List<Local> locals = new ArrayList<>();
 
     public Event(String title, String description, String date, String time) {
         this.title = title;

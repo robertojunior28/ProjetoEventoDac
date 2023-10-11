@@ -5,8 +5,8 @@ import br.edu.ifpb.dac.junior.business.dto.EventDto;
 import java.util.List;
 public interface EventService {
     EventDto save(EventDto eventDto);
-    EventDto update(long id, EventDto eventDto);
-    EventDto findById(long id);
+    EventDto update(Long id, EventDto eventDto);
+    EventDto findById(Long id);
     List<EventDto> findAllEvents();
-    void delete(long id);
+    void delete(Long id);
 }

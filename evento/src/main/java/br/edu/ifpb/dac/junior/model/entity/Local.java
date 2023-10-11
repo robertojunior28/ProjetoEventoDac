@@ -3,13 +3,16 @@ package br.edu.ifpb.dac.junior.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "local")
+@Table(name = "locals")
 public class Local {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,9 +22,9 @@ public class Local {
     private String city;
     private String uf;
 
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+    @ManyToMany(mappedBy = "locals", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Event> events = new ArrayList<>();
+
 
     public Local(String street, String number, String city, String uf) {
         this.street = street;

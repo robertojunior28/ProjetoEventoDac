@@ -1,6 +1,5 @@
 package br.edu.ifpb.dac.junior.business.dto;
 
-import br.edu.ifpb.dac.junior.model.entity.Event;
 import lombok.*;
 
 @Getter

@@ -21,26 +21,46 @@ public class LocalController {
     }
     @PostMapping
     @Transactional
-    public ResponseEntity<LocalDto> create(@RequestBody LocalDto localDto){
-        return new ResponseEntity<>(localService.salvar(localDto), HttpStatus.CREATED) ;
+    public ResponseEntity create(@RequestBody LocalDto localDto){
+        try {
+            return new ResponseEntity(localService.salvar(localDto), HttpStatus.CREATED) ;
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<LocalDto> update(@RequestBody LocalDto localDto, @PathVariable long id) {
-        return new ResponseEntity<>(localService.update(id, localDto), HttpStatus.OK);
+    public ResponseEntity update(@RequestBody LocalDto localDto, @PathVariable long id) {
+        try {
+            return new ResponseEntity<>(localService.update(id, localDto), HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<LocalDto> recoveredById(@PathVariable long id){
-        return new ResponseEntity<>(localService.findById(id), HttpStatus.OK);
+    public ResponseEntity recoveredById(@PathVariable long id){
+        try {
+            return new ResponseEntity<>(localService.findById(id), HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping
-    public ResponseEntity<List<LocalDto>> recoveredAll(){
-        return new ResponseEntity<>(localService.findAll(), HttpStatus.OK) ;
+    public ResponseEntity recoveredAll(){
+        try {
+            return new ResponseEntity<>(localService.findAll(), HttpStatus.OK) ;
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<String> deleteLocal(@PathVariable long id){
-        localService.delete(id);
-        return new ResponseEntity<>("Local entity deleted successful.", HttpStatus.OK);
+        try {
+            localService.delete(id);
+            return new ResponseEntity<>("Local entity deleted successful.", HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

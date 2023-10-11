@@ -22,27 +22,47 @@ public class EventController {
     }
     @PostMapping
     @Transactional
-    public EventDto create(@RequestBody EventDto eventDto){
-        return eventService.save(eventDto);
+    public ResponseEntity create(@RequestBody EventDto eventDto){
+        try {
+            return new ResponseEntity(eventService.save(eventDto), HttpStatus.CREATED);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<EventDto> update(@RequestBody EventDto eventDto, @PathVariable long id ) {
-        return new ResponseEntity<>(eventService.update(id, eventDto), HttpStatus.OK);
+    public ResponseEntity update(@RequestBody EventDto eventDto, @PathVariable long id ) {
+        try {
+            return new ResponseEntity(eventService.update(id, eventDto), HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<EventDto> recovergitByID(@PathVariable long id){
-        return new ResponseEntity<>(eventService.findById(id), HttpStatus.OK) ;
+    public ResponseEntity recovergitByID(@PathVariable long id){
+        try {
+            return new ResponseEntity(eventService.findById(id), HttpStatus.OK) ;
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @GetMapping
-    public ResponseEntity<List<EventDto>> recoverAll(){
-        return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK) ;
+    public ResponseEntity recoverAll(){
+        try {
+            return new ResponseEntity<>(eventService.findAllEvents(), HttpStatus.OK) ;
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<String> deleteEvent(@PathVariable long id){
-        eventService.delete(id);
-        return new ResponseEntity<>("Event entity deleted successful.", HttpStatus.OK);
+    public ResponseEntity deleteEvent(@PathVariable long id){
+        try {
+            eventService.delete(id);
+            return new ResponseEntity<>("Event entity deleted successful.", HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

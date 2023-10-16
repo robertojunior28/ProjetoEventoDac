@@ -2,12 +2,17 @@ package br.edu.ifpb.dac.junior.utils;
 
 import br.edu.ifpb.dac.junior.business.dto.EventDto;
 import br.edu.ifpb.dac.junior.business.dto.LocalDto;
+import br.edu.ifpb.dac.junior.business.dto.UserDto;
 import br.edu.ifpb.dac.junior.model.entity.Event;
 import br.edu.ifpb.dac.junior.model.entity.Local;
+import br.edu.ifpb.dac.junior.model.entity.UserModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Convert {
+
+
 
     public static Event dtoToEvent(EventDto eventDto){
         Event event = new Event();
@@ -62,5 +67,29 @@ public class Convert {
         localDto.setCity(local.getCity());
         localDto.setUf(local.getUf());
         return localDto;
+    }
+
+    public static UserModel dtoToUser(UserDto dto){
+        UserModel entity = new UserModel();
+
+        entity.setId(dto.getId());
+        entity.setName(dto.getName());
+        entity.setEmail(dto.getEmail());
+        entity.setPassword(dto.getPassword());
+
+        return entity;
+    }
+
+    public static UserDto userToDto(UserModel entity){
+        UserDto dto = new UserDto();
+
+        dto.setId(entity.getId());
+        dto.setName(entity.getName());
+        dto.setEmail(entity.getEmail());
+
+        dto.setUserRole(entity.getUserRole());
+
+
+        return dto;
     }
 }

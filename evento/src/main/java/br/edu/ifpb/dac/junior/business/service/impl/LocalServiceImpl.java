@@ -6,7 +6,6 @@ import br.edu.ifpb.dac.junior.business.dto.LocalDto;
 import br.edu.ifpb.dac.junior.model.repository.LocalRepository;
 import br.edu.ifpb.dac.junior.utils.Convert;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -11,10 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,8 +24,7 @@ class EventServiceImplTest {
 
     @InjectMocks
     private EventServiceImpl eventService;
-    @Mock
-    private ModelMapper mapper;
+
 
 
 

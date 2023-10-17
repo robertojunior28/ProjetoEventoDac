@@ -1,7 +1,6 @@
 package br.edu.ifpb.dac.junior.model.entity;
 
 import br.edu.ifpb.dac.junior.model.enums.UserRole;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +24,10 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 public class UserModel implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true)
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)

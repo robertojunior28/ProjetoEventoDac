@@ -6,6 +6,7 @@ import br.edu.ifpb.dac.junior.business.dto.UserDto;
 import br.edu.ifpb.dac.junior.model.entity.Event;
 import br.edu.ifpb.dac.junior.model.entity.Local;
 import br.edu.ifpb.dac.junior.model.entity.UserModel;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,4 +93,6 @@ public class Convert {
 
         return dto;
     }
+
+
 }

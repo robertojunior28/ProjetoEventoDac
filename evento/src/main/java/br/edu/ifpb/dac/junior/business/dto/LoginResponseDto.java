@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.junior.business.dto;
 
-public record LoginResponseDto(String token) {
+
+public record LoginResponseDto(String token, UserDto userDto) {
 
 }

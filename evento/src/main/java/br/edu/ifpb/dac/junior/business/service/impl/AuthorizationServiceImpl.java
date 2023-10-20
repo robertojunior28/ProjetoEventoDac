@@ -3,6 +3,8 @@ package br.edu.ifpb.dac.junior.business.service.impl;
 import java.awt.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
+import br.edu.ifpb.dac.junior.business.dto.LoginDto;
 import br.edu.ifpb.dac.junior.business.dto.LoginResponseDto;
 import br.edu.ifpb.dac.junior.business.dto.RegisterDto;
 import br.edu.ifpb.dac.junior.business.dto.UserDto;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,13 +43,18 @@ public class AuthorizationServiceImpl implements UserDetailsService, Authorizati
         return userRepository.findByEmail(email);
     }
 
-    public LoginResponseDto login(UserDto data){
+
+    public LoginResponseDto login(LoginDto loginDto){
         authenticationManager = context.getBean(AuthenticationManager.class);
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.getEmail(), data.getPassword());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
-        return new LoginResponseDto(token);
+
+        UserDetails userDetails = this.loadUserByUsername(loginDto.email());
+
+        UserDto userDto = Convert.userToDto((UserModel) userRepository.findByEmail(userDetails.getUsername()));
+        return new LoginResponseDto(token, userDto);
     }
 
 
@@ -77,6 +86,12 @@ public class AuthorizationServiceImpl implements UserDetailsService, Authorizati
         Matcher matcher = pattern.matcher(email);
 
         return matcher.matches();
+    }
+
+    @Override
+    public UserDto getLoggedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return Convert.userToDto((UserModel) authentication.getPrincipal());
     }
 
 

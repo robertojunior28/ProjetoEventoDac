@@ -1,12 +1,10 @@
 package br.edu.ifpb.dac.junior.presentation.controller;
 
-import br.edu.ifpb.dac.junior.business.dto.AuthetinticationDto;
+import br.edu.ifpb.dac.junior.business.dto.LoginDto;
 import br.edu.ifpb.dac.junior.business.dto.RegisterDto;
-import br.edu.ifpb.dac.junior.business.dto.UserDto;
 import br.edu.ifpb.dac.junior.business.service.AuthorizationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +20,7 @@ public class AuthController {
     AuthorizationService authorizationService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid UserDto authetinticationDto){
+    public ResponseEntity login(@RequestBody @Valid LoginDto authetinticationDto){
         try {
             return new ResponseEntity(authorizationService.login(authetinticationDto), HttpStatus.OK);
         }catch (Exception e){

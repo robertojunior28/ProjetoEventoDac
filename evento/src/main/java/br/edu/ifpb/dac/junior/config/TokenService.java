@@ -25,7 +25,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             String token = JWT.create()
-                    .withIssuer("auth")
+                    .withIssuer("Authorization")
                     .withSubject(userModel.getEmail())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
@@ -42,7 +42,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             return JWT.require(algorithm)
-                    .withIssuer("auth")
+                    .withIssuer("Authorization")
                     .build()
                     .verify(token)
                     .getSubject();
@@ -57,7 +57,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Date expirationDate = JWT.require(algorithm)
-                    .withIssuer("auth")
+                    .withIssuer("Authorization")
                     .build()
                     .verify(token)
                     .getExpiresAt();

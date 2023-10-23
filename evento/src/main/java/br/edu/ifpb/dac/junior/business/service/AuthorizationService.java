@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthorizationService {
     UserDetails loadUserByUsername(String email);
-    LoginResponseDto login(LoginDto data);
+    LoginResponseDto login(String username, String password);
     UserDto register(RegisterDto registerDto);
 
     boolean isValid(String token);

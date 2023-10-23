@@ -1,8 +1,8 @@
 package br.edu.ifpb.dac.junior.model.enums;
 
 public enum UserRole {
-    ADMIN("admin"),
-    USER("user");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String role;
 

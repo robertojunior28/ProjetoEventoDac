@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import br.edu.ifpb.dac.junior.business.dto.LoginDto;
 import br.edu.ifpb.dac.junior.business.dto.LoginResponseDto;
 import br.edu.ifpb.dac.junior.business.dto.RegisterDto;
 import br.edu.ifpb.dac.junior.business.dto.UserDto;
@@ -44,16 +43,17 @@ public class AuthorizationServiceImpl implements UserDetailsService, Authorizati
     }
 
 
-    public LoginResponseDto login(LoginDto loginDto){
+    public LoginResponseDto login(String username, String password){
         authenticationManager = context.getBean(AuthenticationManager.class);
 
-        var usernamePassword = new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(username, password);
         var auth = this.authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((UserModel) auth.getPrincipal());
 
-        UserDetails userDetails = this.loadUserByUsername(loginDto.email());
+        UserDetails userDetails = this.loadUserByUsername(username);
+        UserModel userModel = userRepository.findByEmail(username);
 
-        UserDto userDto = Convert.userToDto((UserModel) userRepository.findByEmail(userDetails.getUsername()));
+        UserDto userDto = Convert.userToDto(userModel);
         return new LoginResponseDto(token, userDto);
     }
 

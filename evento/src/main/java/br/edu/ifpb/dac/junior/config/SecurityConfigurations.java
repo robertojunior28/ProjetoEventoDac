@@ -1,6 +1,7 @@
 package br.edu.ifpb.dac.junior.config;
 
 
+import br.edu.ifpb.dac.junior.model.enums.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -38,14 +39,14 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/event").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/event/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/event/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/event/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/local/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.PUT, "/local/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.DELETE, "/local/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.GET, "/local/**").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/event").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/event/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/event/**").hasAnyAuthority(UserRole.ADMIN.getRole())
+                        .requestMatchers(HttpMethod.GET, "/event/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/local/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/local/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/local/**").hasAnyAuthority(UserRole.ADMIN.getRole())
+                        .requestMatchers(HttpMethod.GET, "/local/**").authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
